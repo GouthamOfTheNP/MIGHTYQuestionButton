@@ -12,9 +12,17 @@ st.write("SMASH THIS BUTTON!!! The MIGHTY Question Button will spit out a brain-
 if "question" not in st.session_state:
 	st.session_state.question = None
 
-dropdown = st.selectbox("Select a topic", ["AP Physics C", "AP Calculus BC", "SAT Math", "SAT Reading and Writing"])
+topics = ["AP Physics C", "AP Calculus BC", "SAT Math", "SAT Reading and Writing", "Other"]
+dropdown = st.selectbox("Select a topic", topics)
 
-question_contents = f"""Write one multiple-choice question that asks about a topic in {dropdown}. 
+custom_topic = None
+if dropdown == "Other":
+	custom_topic = st.text_input("Enter your custom topic:")
+	topic_to_use = custom_topic
+else:
+	topic_to_use = dropdown
+
+question_contents = f"""Write one multiple-choice question that asks about a topic in {topic_to_use}. 
 Use this exact format:
 Question: [Your question here]  \n
 A) [Option A]  \n
@@ -24,7 +32,7 @@ D) [Option D]
 
 Do NOT include the answer."""
 
-if st.button("Get Your Question"):
+if st.button("Get Your Question") or custom_topic:
 	with st.spinner("Generating your question..."):
 		st.session_state.question = client.models.generate_content(
 			model="gemini-2.5-flash",
