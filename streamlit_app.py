@@ -7,7 +7,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API"))
 st.set_page_config(page_title="MIGHTY Question Button", page_icon=":brain:")
 st.title("The MIGHTY Question Button")
 st.badge("Up-to-date", color="blue")
-st.write("SMASH THIS BUTTON!!! The MIGHTY Question Button will spit out a brain-boggling, head-scratching, noodle-twisting question just for YOU! Side effects may include sudden genius, mild panic, and a strange urge to do math in your sleep. 🧠💥💅")
+st.write("SMASH THIS BUTTON!!! The MIGHTY Question Button will spit out a brain-boggling and brainrotted question just for YOU! Side effects may include sudden genius, mild panic, and a strange urge to do math in your sleep. 🧠💥💅")
 
 if "question" not in st.session_state:
 	st.session_state.question = None
