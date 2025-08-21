@@ -11,6 +11,7 @@
     - AP Calculus BC
     - SAT Math
     - SAT Reading
+    - Custom Input
 - Generate a new multiple-choice question on the selected topic
 - Reveal the correct answer with a detailed explanation
 - Persistent question display using Streamlit session state
