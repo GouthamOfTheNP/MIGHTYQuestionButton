@@ -15,14 +15,11 @@ if "question" not in st.session_state:
 topics = ["AP Physics C", "AP Calculus BC", "SAT Math", "SAT Reading and Writing", "Other"]
 dropdown = st.selectbox("Select a topic", topics)
 
-custom_topic = None
-if dropdown == "Other":
-	custom_topic = st.text_input("Enter your custom topic:")
-	topic_to_use = custom_topic
-else:
-	topic_to_use = dropdown
+custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" else ""
 
-question_contents = f"""Write one multiple-choice question that asks about a topic in {topic_to_use}. 
+if st.button("Get Your Question"):
+	topic_to_use = custom_topic if dropdown == "Other" and custom_topic else dropdown
+	question_contents = f"""Write one multiple-choice question about {topic_to_use}.
 Use this exact format:
 Question: [Your question here]  \n
 A) [Option A]  \n
@@ -31,8 +28,6 @@ C) [Option C]  \n
 D) [Option D]  
 
 Do NOT include the answer."""
-
-if st.button("Get Your Question") or custom_topic:
 	with st.spinner("Generating your question..."):
 		st.session_state.question = client.models.generate_content(
 			model="gemini-2.5-flash",
@@ -41,11 +36,10 @@ if st.button("Get Your Question") or custom_topic:
 
 if st.session_state.question:
 	st.markdown(st.session_state.question)
-
-if st.session_state.question is not None and st.button("Reveal Answer"):
-	with st.spinner("💥🥀 Behold the mighty answer, mere mortal..."):
-		response = client.models.generate_content(
-			model="gemini-2.5-pro",
-			contents=f"Write the correct answer to the question above: {st.session_state.question}",
-		)
-		st.markdown(response.text)
+	if st.button("Reveal Answer"):
+		with st.spinner("💥🥀 Behold the mighty answer..."):
+			response = client.models.generate_content(
+				model="gemini-2.5-pro",
+				contents=f"Write the correct answer to the question above: {st.session_state.question}",
+			)
+			st.markdown(response.text)
