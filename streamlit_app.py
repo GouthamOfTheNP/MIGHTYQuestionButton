@@ -15,7 +15,7 @@ if "question" not in st.session_state:
 topics = ["AP Physics C", "AP Calculus BC", "SAT Math", "SAT Reading and Writing", "AP Spanish 4 MCQ Main Idea", "AP Spanish 4 MCQ Contextual", "Other"]
 dropdown = st.selectbox("Select a topic", topics)
 
-custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of source article, with questions focusing on specific details rather than the main idea" if dropdown == "AP Spanish 4 MCQ Contextual" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of source article, with questions focusing on main idea" if dropdown == "AP Spanish 4 MCQ Main Idea" else ""
+custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of source article, with questions focusing on specific details rather than the main idea" if dropdown == "AP Spanish 4 MCQ Contextual" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of the source article, with questions focusing on main idea" if dropdown == "AP Spanish 4 MCQ Main Idea" else ""
 
 if st.button("Get Your Question"):
 	topic_to_use = custom_topic if dropdown == "Other" and custom_topic else dropdown
