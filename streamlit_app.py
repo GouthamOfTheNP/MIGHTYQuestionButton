@@ -14,7 +14,7 @@ st.write("Press the MIGHTY Question Button to generate a challenging, thought-pr
 if "question" not in st.session_state:
 	st.session_state.question = None
 
-topics = ["AP Spanish 4 MCQ Main Idea", "AP Spanish 4 MCQ Contextual", "AP Calculus AB", "AP Calculus BC", "AP Physics 1", "AP Physics 2", "AP Physics C", "AP Biology", "AP Chemistry", "AP World History", "AP United States History", "SAT Math", "SAT Reading and Writing", "Other"]
+topics = ["AP Spanish 4 MCQ Main Idea", "AP Spanish 4 MCQ Contextual", "AP Spanish Language and Culture", "AP Calculus AB", "AP Calculus BC", "AP Physics 1", "AP Physics 2", "AP Physics C", "AP Biology", "AP Chemistry", "AP World History", "AP United States History", "SAT Math", "SAT Reading and Writing", "Other"]
 dropdown = st.selectbox("Select a topic", topics)
 
 custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length, paragraph count, and complexity of the source article, with questions focusing on specific details rather than the main idea" if dropdown == "AP Spanish 4 MCQ Contextual" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length, paragraph count, and complexity of the source article, with questions focusing on main idea" if dropdown == "AP Spanish 4 MCQ Main Idea" else ""
