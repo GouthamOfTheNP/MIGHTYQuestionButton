@@ -18,7 +18,7 @@ dropdown = st.selectbox("Select a topic", topics)
 custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of source article, with questions focusing on specific details rather than the main idea" if dropdown == "AP Spanish 4 MCQ Contextual" else "AP Spanish 4 MCQ Questions in Spanish with source article in full-text format following AP Spanish Guidelines for the length and complexity of the source article, with questions focusing on main idea" if dropdown == "AP Spanish 4 MCQ Main Idea" else ""
 
 if st.button("Get Your Question"):
-	topic_to_use = (custom_topic if dropdown == "Other" or "AP Spanish 4 MCQ" in dropdown) and custom_topic else dropdown
+	topic_to_use = custom_topic if (dropdown == "Other" or "AP Spanish 4 MCQ" in dropdown) and custom_topic else dropdown
 	question_contents = f"""Write one multiple-choice question about {topic_to_use}.
 Use this exact format:
 Question: [Your question here]  \n
