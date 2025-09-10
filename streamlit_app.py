@@ -40,7 +40,7 @@ try:
 	if st.session_state.question:
 		st.markdown(st.session_state.question)
 		if st.button("Reveal Answer"):
-			with st.spinner("💥🥀 Behold the mighty answer..."):
+			with st.spinner("Behold the mighty answer..."):
 				response = client.models.generate_content(
 					model="gemini-2.5-pro",
 					contents=f"Write the correct answer to the question above: {st.session_state.question}",
