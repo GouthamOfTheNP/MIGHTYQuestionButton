@@ -7,7 +7,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API"))
 st.set_page_config(page_title="MIGHTY Question Button", page_icon=":brain:")
 st.title("The MIGHTY Question Button")
 st.badge("Up-to-date", color="blue")
-st.write("SMASH THIS BUTTON!!! The MIGHTY Question Button will spit out a brain-boggling and brainrotted question just for YOU! Side effects may include sudden genius, mild panic, and a strange urge to do math in your sleep. 🧠💥💅")
+st.write("Press the MIGHTY Question Button to generate a challenging, thought-provoking practice question tailored to AP and SAT topics. Perfect for sharpening your problem-solving skills in a fun and engaging way. Side effects may include bursts of insight, sudden motivation, and an uncontrollable urge to solve “just one more” problem. 🧠⚡️")
 
 if "question" not in st.session_state:
 	st.session_state.question = None
@@ -37,7 +37,7 @@ Do NOT include the answer."""
 if st.session_state.question:
 	st.markdown(st.session_state.question)
 	if st.button("Reveal Answer"):
-		with st.spinner("💥🥀 Behold the mighty answer..."):
+		with st.spinner("Behold the mighty answer..."):
 			response = client.models.generate_content(
 				model="gemini-2.5-pro",
 				contents=f"Write the correct answer to the question above: {st.session_state.question}",
