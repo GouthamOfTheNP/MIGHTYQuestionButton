@@ -1,6 +1,7 @@
 import streamlit as st
-from google import genai
+import google
 import os
+from google import genai
 
 from google.api_core.exceptions import ServerError
 
