@@ -46,5 +46,5 @@ try:
 					contents=f"Write the correct answer to the question above: {st.session_state.question}",
 				)
 				st.markdown(response.text)
-except ServerError:
+except google.genai.errors.ServerError:
 	st.error("Server is overloaded. Please try again later.")
