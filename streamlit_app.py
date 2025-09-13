@@ -1,9 +1,11 @@
 import streamlit as st
-import google
 import os
-from google import genai
+import time
+from google.genai import Client
+from google.api_core.exceptions import ResourceExhausted
+from google.genai.errors import ServerError
 
-client = genai.Client(api_key=os.getenv("GEMINI_API"))
+client = Client(api_key=os.getenv("GEMINI_API"))
 
 st.set_page_config(page_title="MIGHTY Question Button", page_icon=":brain:")
 st.title("The MIGHTY Question Button")
@@ -12,6 +14,7 @@ st.write("Press the MIGHTY Question Button to generate a challenging, thought-pr
 
 if "question" not in st.session_state:
 	st.session_state.question = None
+	st.session_state.answer = None
 
 topics = ["AP Spanish 4 MCQ Main Idea", "AP Spanish 4 MCQ Contextual", "AP Calculus AB", "AP Calculus BC", "AP Physics 1", "AP Physics 2", "AP Physics C", "AP Biology", "AP Chemistry", "AP World History", "AP United States History", "SAT Math", "SAT Reading and Writing", "Other"]
 dropdown = st.selectbox("Select a topic", topics)
@@ -20,7 +23,7 @@ custom_topic = st.text_input("Enter your custom topic:") if dropdown == "Other" 
 
 try:
 	if st.button("Get Your Question"):
-		topic_to_use = custom_topic if (dropdown == "Other" or "AP Spanish 4 MCQ" in dropdown) and custom_topic else dropdown
+		topic_to_use = custom_topic if custom_topic else dropdown
 		question_contents = f"""Write one multiple-choice question about {topic_to_use}.
 	Use this exact format:
 	Question: [Your question here]  \n
@@ -31,21 +34,44 @@ try:
 	
 	Do NOT include the answer."""
 		with st.spinner("Generating your question..."):
-			st.session_state.question = client.models.generate_content(
-				model="gemini-2.5-flash",
-				contents=question_contents,
-			).text
-
+			retries = 3
+			delay = 5
+			for attempt in range(retries):
+				try:
+					st.session_state.question = client.models.generate_content(
+						model="gemini-2.5-flash",
+						contents=question_contents,
+					).text
+					st.session_state.answer = None
+					break
+				except ResourceExhausted:
+					if attempt < retries - 1:
+						time.sleep(delay)
+						delay *= 2
+					else:
+						raise
 	if st.session_state.question:
 		st.markdown(st.session_state.question)
 		if st.button("Reveal Answer"):
 			with st.spinner("Behold the mighty answer..."):
-				response = client.models.generate_content(
-					model="gemini-2.5-pro",
-					contents=f"Write the correct answer to the question above: {st.session_state.question}",
-				)
-				st.markdown(response.text)
-except google.genai.errors.ServerError:
+				retries = 3
+				delay = 5
+				for attempt in range(retries):
+					try:
+						st.session_state.answer = client.models.generate_content(
+							model="gemini-2.5-flash",
+							contents=f"Write the correct answer to the question above: {st.session_state.question}",
+						).text
+						break
+					except ResourceExhausted:
+						if attempt < retries - 1:
+							time.sleep(delay)
+							delay *= 2
+						else:
+							raise
+	if st.session_state.answer:
+		st.markdown(st.session_state.answer)
+except ServerError:
 	st.error("Server is overloaded. Please try again later.")
 except Exception as e:
-	st.error(e)
+	st.error(str(e) + " 67")
