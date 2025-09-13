@@ -48,3 +48,5 @@ try:
 				st.markdown(response.text)
 except google.genai.errors.ServerError:
 	st.error("Server is overloaded. Please try again later.")
+except Exception as e:
+	st.error(e)
