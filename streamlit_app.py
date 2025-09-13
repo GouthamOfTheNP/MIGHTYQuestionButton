@@ -3,8 +3,6 @@ import google
 import os
 from google import genai
 
-from google.api_core.exceptions import ServerError
-
 client = genai.Client(api_key=os.getenv("GEMINI_API"))
 
 st.set_page_config(page_title="MIGHTY Question Button", page_icon=":brain:")
