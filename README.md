@@ -8,7 +8,16 @@
 
 - Select a topic from:
     - AP Physics C
+    - AP Physics 1
+    - AP Physics 2
+    - AP Spanish MCQ Main Idea
+    - AP Spanish MCQ Contextual
+    - AP Calculus AB
     - AP Calculus BC
+    - AP World History
+    - AP United States History
+    - AP Biology
+    - AP Chemistry
     - SAT Math
     - SAT Reading
     - Custom Input
